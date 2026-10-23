@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Happy Farm – Nông Trại Vui Vẻ</title>
+<style>
+:root{--green:#4e9b52;--deep:#28643b;--cream:#fff8e8;--ink:#3d4937;--gold:#f5bd3d}
+*{box-sizing:border-box}body{margin:0;background:#dff4d5;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+button{font:inherit;cursor:pointer;border:0;border-radius:14px;padding:11px 14px;font-weight:750;box-shadow:0 3px 0 #00000012;transition:transform .12s,filter .12s}button:hover{filter:brightness(1.04);transform:translateY(-1px)}button:active{transform:translateY(1px)}
+.app{max-width:1100px;margin:auto;padding:16px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#fff9e9;border:3px solid #fff;border-radius:24px;padding:14px 18px;box-shadow:0 7px 0 #bdddb0}
+.brand{display:flex;align-items:center;gap:12px}.logo{font-size:40px;background:#d4efbb;border-radius:16px;padding:5px 12px}.brand h1{font-size:clamp(21px,4vw,30px);margin:0;color:#337846}.brand p{margin:2px 0 0;font-size:13px}
+.stats{display:flex;gap:8px;flex-wrap:wrap}.stat{background:#fff;border:2px solid #e8edce;border-radius:14px;padding:8px 12px;font-weight:800;white-space:nowrap}.stat span{margin-right:5px}
+.main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:16px;margin-top:16px}.panel{background:#fff9e9;border:3px solid #fff;border-radius:24px;padding:16px;box-shadow:0 7px 0 #bdddb0}.panel h2{margin:0 0 10px;color:#337846;font-size:20px}.farmhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.farmhead p{margin:0;font-size:13px}
+.sky{margin-top:12px;border-radius:20px;padding:14px;background:linear-gradient(#a9e4ff 0 34%,#7bc96b 34%);border:3px solid #fff;position:relative;overflow:hidden}.sun{position:absolute;right:18px;top:10px;font-size:32px}.farm-decor{font-size:22px;display:flex;justify-content:space-between;height:35px;position:relative;z-index:1}
+.plots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;position:relative;z-index:1}
+.plot{min-height:105px;background:#9b633b;border:3px solid #754426;border-radius:15px;color:white;padding:7px 3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-shadow:0 1px 2px #52301c;box-shadow:inset 0 -5px #754426;position:relative;overflow:hidden}
+.plot .crop{font-size:35px;line-height:1.1;text-shadow:none}.plot .label{font-size:12px;font-weight:800}.plot .sub{font-size:10px;opacity:.95}.plot.empty{background:#b77b4d}.plot.ready{background:#9b633b;outline:3px solid #f6cf4d;animation:bob 1.4s infinite alternate}.plot.locked{background:#8c9b7b;border-color:#65765c;cursor:not-allowed}.plot .progress{height:4px;background:#f7e2a7;width:72%;border-radius:5px;overflow:hidden}.plot .progress i{display:block;height:100%;background:#57d878}
+@keyframes bob{to{transform:translateY(-2px)}}.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.tool{background:#e5f4d7;color:#386b3d;border:2px solid #cde6b9;padding:10px 3px;font-size:13px}.tool.active{background:#4e9b52;color:#fff;border-color:#347d3c}.hint{margin-top:12px;background:#fff1bd;border-radius:13px;padding:10px 12px;font-size:13px;min-height:40px}
+.side{display:flex;flex-direction:column;gap:16px}.shoplist{display:grid;gap:8px}.shopitem{display:flex;align-items:center;gap:9px;background:white;border:2px solid #e8edce;border-radius:15px;padding:9px}.cropicon{font-size:30px;width:40px;text-align:center}.shopinfo{flex:1;min-width:0}.shopinfo b{display:block}.shopinfo small{font-size:12px;color:#737b68}.buy{background:#f5bd3d;color:#684b08;padding:9px 10px;font-size:12px}.inventory{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.inv{background:#fff;border:2px solid #e8edce;border-radius:13px;padding:9px;font-size:13px}.inv b{display:block;font-size:17px}.sellrow{display:flex;gap:8px;margin-top:10px}.sellrow button{flex:1;background:#4e9b52;color:white}.sellrow .sellall{background:#ef9d45;color:#fff}
+.footer{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:17px 2px 0;font-size:12px;color:#52734e}.smallbtn{background:#fff9e9;color:#386b3d;border:2px solid white;font-size:12px;padding:8px 11px}
+.modalback{position:fixed;inset:0;background:#223b2dcc;display:none;align-items:center;justify-content:center;padding:18px;z-index:5}.modalback.show{display:flex}.modal{max-width:440px;width:100%;background:#fff9e9;border:4px solid white;border-radius:24px;padding:22px;box-shadow:0 12px 40px #0003}.modal h2{margin-top:0;color:#337846}.modal p{line-height:1.55}.modal button{background:#4e9b52;color:white}.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#315f3a;color:white;padding:12px 18px;border-radius:14px;box-shadow:0 5px 20px #0002;z-index:10;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;text-align:center}.toast.show{opacity:1}
+@media(max-width:760px){.main{grid-template-columns:1fr}.app{padding:10px}.panel{padding:12px}.plot{min-height:94px}.tools{grid-template-columns:repeat(4,1fr)}.stat{font-size:13px;padding:7px 9px}.brand p{font-size:12px}}
+@media(max-width:390px){.plots{gap:6px}.plot{min-height:88px}.plot .crop{font-size:29px}.plot .label{font-size:11px}.tools button{font-size:11px;padding:9px 1px}.logo{font-size:32px}.stat{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+ <div class="brand"><div class="logo">🌻</div><div><h1>Happy Farm</h1><p>🌱 Nông Trại Vui Vẻ · Trồng cây, gieo niềm vui!</p></div></div>
+ <div class="stats"><div class="stat"><span>🪙</span><b id="coins">80</b></div><div class="stat"><span>⭐</span><b id="level">Cấp 1</b></div><div class="stat"><span>🌾</span><b id="harvests">0</b></div></div>
+</header>
+<div class="main">
+ <section class="panel">
+  <div class="farmhead"><div><h2>🏡 Khu vườn của bạn</h2><p id="landlabel">6 ô đất · Hãy bắt đầu gieo trồng!</p></div><button class="smallbtn" id="expand">🪴 Mở rộng · 120 🪙</button></div>
+  <div class="sky"><div class="sun">☀️</div><div class="farm-decor"><span>☁️</span><span>🐝</span><span>🕊️</span></div><div class="plots" id="plots"></div></div>
+  <div class="tools" id="tools">
+   <button class="tool active" data-tool="plant">🌱 Gieo hạt</button><button class="tool" data-tool="water">💧 Tưới nước</button><button class="tool" data-tool="harvest">🧺 Thu hoạch</button><button class="tool" data-tool="inspect">👆 Xem cây</button>
+  </div>
+  <div class="hint" id="hint">✨ Chọn hạt giống ở cửa hàng, rồi nhấn vào một ô đất để gieo!</div>
+ </section>
+ <aside class="side">
+  <section class="panel"><h2>🛍️ Cửa hàng hạt giống</h2><div class="shoplist" id="shop"></div></section>
+  <section class="panel"><h2>📦 Kho nông sản</h2><div class="inventory" id="inventory"></div><div class="sellrow"><button id="sellall" class="sellall">💰 Bán tất cả</button><button id="sellone">Bán 1 loại</button></div></section>
+  <section class="panel"><h2>🎵 Góc thư giãn</h2><p style="margin:0 0 10px;font-size:13px">Nhạc vui tươi và hiệu ứng âm thanh nhẹ nhàng.</p><button id="sound" class="smallbtn">🔊 Bật âm thanh</button> <button id="help" class="smallbtn">❔ Cách chơi</button></section>
+ </aside>
+</div>
+<div class="footer"><span>💚 Tiến trình tự lưu trên thiết bị này.</span><button class="smallbtn" id="reset">↻ Chơi lại từ đầu</button></div>
+</div>
+<div class="modalback" id="modal"><div class="modal"><h2>🌼 Chào mừng đến Happy Farm!</h2><p><b>1.</b> Chọn loại hạt giống trong cửa hàng.<br><b>2.</b> Chọn “Gieo hạt” rồi chạm vào ô đất trống.<br><b>3.</b> Chuyển sang “Tưới nước” để cây lớn nhanh hơn.<br><b>4.</b> Khi cây chín, chọn “Thu hoạch”. Bán nông sản để kiếm xu và mua thêm hạt giống.<br><b>5.</b> Có đủ 120 xu? Mở rộng nông trại nhé!</p><p style="font-size:13px">Mẹo: trò chơi tự lưu trên trình duyệt của bạn. Âm thanh bắt đầu sau khi bạn bấm nút để phù hợp với cài đặt trình duyệt.</p><button id="closemodal">Bắt đầu chơi 🌱</button></div></div>
+<div class="toast" id="toast"></div>
+<script>
+(()=>{
+const crops={
+ carrot:{name:'Cà rốt',emoji:'🥕',seed:8,value:18,time:18,desc:'Nhanh lớn · dễ trồng'},
+ wheat:{name:'Lúa mì',emoji:'🌾',seed:5,value:11,time:13,desc:'Rẻ và nhanh'},
+ corn:{name:'Ngô',emoji:'🌽',seed:13,value:29,time:26,desc:'Thu lời khá tốt'},
+ tomato:{name:'Cà chua',emoji:'🍅',seed:11,value:25,time:22,desc:'Đỏ mọng ngon lành'}
+};
+const initial=()=>({coins:80,plots:Array.from({length:6},()=>({crop:null,plantedAt:0,watered:false,unlocked:true})).concat(Array.from({length:3},()=>({crop:null,plantedAt:0,watered:false,unlocked:false}))),unlocked:6,inventory:{carrot:0,wheat:0,corn:0,tomato:0},seeds:{carrot:2,wheat:3,corn:0,tomato:0},harvests:0,selected:'carrot',tool:'plant',sound:false,level:1});
+let state;try{state=JSON.parse(localStorage.getItem('happyFarmSave'))||initial()}catch(e){state=initial()}
+let audioCtx=null, musicTimer=null, musicStep=0, toastTimer;
+const $=id=>document.getElementById(id);
+function save(){try{localStorage.setItem('happyFarmSave',JSON.stringify(state))}catch(e){}}
+function notify(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2200)}
+function audio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx}
+function beep(freq=600,dur=.09,type='sine',vol=.045){if(!state.sound)return;try{const a=audio(),o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(vol,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+dur);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+dur)}catch(e){}}
+function startMusic(){if(!state.sound||musicTimer)return;const notes=[523,659,784,659,587,698,880,698,523,659,784,1046,784,659,587,494];musicTimer=setInterval(()=>{if(state.sound){beep(notes[musicStep%notes.length],.22,'sine',.018);musicStep++}},390)}
+function stopMusic(){clearInterval(musicTimer);musicTimer=null}
+function stage(p){if(!p.crop)return 0;const c=crops[p.crop],elapsed=(Date.now()-p.plantedAt)/1000,needed=c.time*(p.watered?.68:1);return Math.min(3,Math.floor(elapsed/needed*3))}
+function progress(p){if(!p.crop)return 0;return Math.min(100,(Date.now()-p.plantedAt)/(crops[p.crop].time*1000*(p.watered?.68:1))*100)}
+function render(){
+ $('coins').textContent=state.coins;$('harvests').textContent=state.harvests;$('level').textContent='Cấp '+(1+Math.floor(state.harvests/8));
+ $('landlabel').textContent=state.unlocked+' ô đất đang mở · '+(state.unlocked<state.plots.length?'Mở rộng để trồng thêm!':'Nông trại đã mở rộng hết!');
+ $('expand').textContent=state.unlocked>=state.plots.length?'🌳 Đã mở rộng hết':'🪴 Mở rộng · '+(120+Math.max(0,state.unlocked-6)*70)+' 🪙';
+ $('plots').innerHTML=state.plots.map((p,i)=>{
+ if(!p.unlocked)return `<button class="plot locked" data-plot="${i}"><span class="crop">🔒</span><span class="label">Ô đất khóa</span><span class="sub">Mở rộng đất</span></button>`;
+ if(!p.crop)return `<button class="plot empty" data-plot="${i}"><span class="crop">🟫</span><span class="label">Đất trống</span><span class="sub">Chạm để gieo</span></button>`;
+ const s=stage(p),c=crops[p.crop],em=s===0?'🌱':s===1?(p.crop==='carrot'?'🌿':'🌱'):s===2?({carrot:'🥕',wheat:'🌾',corn:'🌿',tomato:'🍃'}[p.crop]):c.emoji;
+ const ready=s>=3;
+ return `<button class="plot ${ready?'ready':''}" data-plot="${i}"><span class="crop">${em}</span><span class="label">${c.name}${ready?' ✨':''}</span>${ready?'<span class="sub">Chín rồi! Thu hoạch</span>':`<span class="progress"><i style="width:${progress(p)}%"></i></span><span class="sub">${p.watered?'💧 Đã tưới':'🌤️ Đang lớn'} · ${Math.max(1,Math.ceil(c.time*(p.watered?.68:1)-(Date.now()-p.plantedAt)/1000))}s</span>`}</button>`;
+ }).join('');
+ $('shop').innerHTML=Object.entries(crops).map(([k,c])=>`<div class="shopitem"><div class="cropicon">${c.emoji}</div><div class="shopinfo"><b>${c.name}</b><small>Hạt ${c.seed} xu · Bán ${c.value} xu<br>${c.desc} · Có ${state.seeds[k]}</small></div><button class="buy" data-buy="${k}">Mua</button></div>`).join('');
+ $('inventory').innerHTML=Object.entries(crops).map(([k,c])=>`<div class="inv">${c.emoji} ${c.name}<b>${state.inventory[k]} <small style="font-size:11px;font-weight:500">(+${c.value}/cây)</small></b></div>`).join('');
+ document.querySelectorAll('[data-tool]').forEach(b=>b.classList.toggle('active',b.dataset.tool===state.tool));
+ $('sound').textContent=state.sound?'🔊 Tắt âm thanh':'🔇 Bật âm thanh';
+}
+function doPlot(i){const p=state.plots[i];if(!p.unlocked){notify('Ô đất này đang khóa. Hãy mở rộng nông trại!');return}
+ if(state.tool==='plant'){
+  if(p.crop){notify('Ô này đã có cây rồi!');return}
+  const k=state.selected;if(state.seeds[k]<=0){notify('Bạn hết hạt '+crops[k].name+' rồi. Hãy mua thêm nhé!');return}
+  state.seeds[k]--;p.crop=k;p.plantedAt=Date.now();p.watered=false;beep(660);notify('Đã gieo '+crops[k].name+'! 🌱');
+ }else if(state.tool==='water'){
+  if(!p.crop){notify('Hãy gieo hạt trước nhé!');return}if(stage(p)>=3){notify('Cây đã chín, thu hoạch thôi!');return}if(p.watered){notify('Cây này đã được tưới rồi 💧');return}
+  p.watered=true;beep(780,.15,'sine');notify('Tưới nước thành công! Cây sẽ lớn nhanh hơn 💧');
+ }else if(state.tool==='harvest'){
+  if(!p.crop){notify('Ô đất này chưa có cây.');return}if(stage(p)<3){notify('Cây chưa chín, hãy chờ thêm nhé! 🌿');return}
+  const k=p.crop;state.inventory[k]++;state.harvests++;p.crop=null;p.plantedAt=0;p.watered=false;beep(880,.2);setTimeout(()=>beep(1100,.15),90);notify('Thu hoạch '+crops[k].name+' thành công! 🧺');
+ }else{if(!p.crop)notify('Đất trống — chọn Gieo hạt để trồng cây.');else notify(crops[p.crop].name+(stage(p)>=3?' đã chín, sẵn sàng thu hoạch!':' đang lớn dần. '+Math.round(progress(p))+'%'));beep(500,.06)}
+ state.level=1+Math.floor(state.harvests/8);save();render();
+}
+$('plots').addEventListener('click',e=>{const b=e.target.closest('[data-plot]');if(b)doPlot(+b.dataset.plot)});
+$('shop').addEventListener('click',e=>{const b=e.target.closest('[data-buy]');if(!b)return;const k=b.dataset.buy,c=crops[k];if(state.coins<c.seed){notify('Chưa đủ xu để mua hạt giống!');return}state.coins-=c.seed;state.seeds[k]++;state.selected=k;state.tool='plant';beep(740);notify('Đã mua hạt '+c.name+'. Chạm vào đất để gieo!');save();render()});
+document.querySelectorAll('[data-tool]').forEach(b=>b.addEventListener('click',()=>{state.tool=b.dataset.tool;const messages={plant:'🌱 Chọn hạt giống, rồi chạm vào ô đất trống để gieo.',water:'💧 Chạm vào cây đang lớn để tưới, giúp cây chín nhanh hơn.',harvest:'🧺 Chạm vào cây đã chín để thu hoạch.',inspect:'👆 Chạm vào ô đất để xem trạng thái cây.'};$('hint').textContent=messages[state.tool];beep(520);render()}));
+$('expand').addEventListener('click',()=>{if(state.unlocked>=state.plots.length){notify('Bạn đã mở rộng hết đất rồi!');return}const cost=120+Math.max(0,state.unlocked-6)*70;if(state.coins<cost){notify('Cần '+cost+' xu để mở rộng đất. Hãy bán nông sản nhé!');return}state.coins-=cost;const old=state.unlocked;state.unlocked=Math.min(state.plots.length,state.unlocked+3);for(let i=old;i<state.unlocked;i++)state.plots[i].unlocked=true;beep(920,.2);notify('Tuyệt vời! Bạn đã mở thêm '+(state.unlocked-old)+' ô đất! 🌳');save();render()});
+$('sellall').addEventListener('click',()=>{let total=0,n=0;for(const k in crops){total+=state.inventory[k]*crops[k].value;n+=state.inventory[k];state.inventory[k]=0}if(!n){notify('Kho chưa có nông sản. Hãy thu hoạch trước nhé!');return}state.coins+=total;beep(880,.18);notify('Đã bán '+n+' nông sản, nhận '+total+' xu! 🪙');save();render()});
+$('sellone').addEventListener('click',()=>{const keys=Object.keys(crops),available=keys.filter(k=>state.inventory[k]>0);if(!available.length){notify('Kho chưa có nông sản để bán.');return}const k=available[0];state.inventory[k]--;state.coins+=crops[k].value;beep(820);notify('Đã bán 1 '+crops[k].name+', nhận '+crops[k].value+' xu!');save();render()});
+$('sound').addEventListener('click',()=>{state.sound=!state.sound;if(state.sound){audio();startMusic();beep(700)}else stopMusic();save();render()});
+$('help').addEventListener('click',()=>$('modal').classList.add('show'));$('closemodal').addEventListener('click',()=>$('modal').classList.remove('show'));
+$('reset').addEventListener('click',()=>{if(confirm('Bạn có chắc muốn xóa nông trại hiện tại và chơi lại từ đầu?')){stopMusic();state=initial();save();render();notify('Nông trại mới đã sẵn sàng! 🌱')}});
+if(!localStorage.getItem('happyFarmSave'))$('modal').classList.add('show');
+render();setInterval(()=>{render();save()},1000);
+})();
+</script>
+</body>
+</html>
